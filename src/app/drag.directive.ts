@@ -1,12 +1,20 @@
-import { Directive, ElementRef, HostListener, HostBinding } from '@angular/core';
+import { DragService } from './services/drag.service';
+import { Directive, ElementRef, HostListener, HostBinding, Input } from '@angular/core';
 
 import {DragOptions} from './drag-options';
 @Directive({
   selector: '[appDrag]'
 })
 export class DragDirective {
+  private options: DragOptions = {};
   @HostBinding('draggable') get draggable(){
     return true;
+  }
+
+  @Input() set appDrag(options: DragOptions){
+    if (options) {
+      this.options = options;
+    }
   }
 
   @HostListener('drag', ['$event']) drag(event: any) {
@@ -17,8 +25,10 @@ export class DragDirective {
   @HostListener('dragstart', ['$event']) dragstart(event: any) {
     console.log('dragStart');
     console.log(event);
-    //this.el.nativeElement.style.border = 'dashed';
-    //ev.dataTransfer.setData('text', 1);
+    if (this.options.dragData) {
+      console.log(this.options.dragData);
+      event.dataTransfer.setData('text', JSON.stringify(this.options.dragData));
+    }
     event.effectAllowed = 'move';
   }
 
@@ -28,6 +38,6 @@ export class DragDirective {
   }
 
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private dragService: DragService) { }
 
 }

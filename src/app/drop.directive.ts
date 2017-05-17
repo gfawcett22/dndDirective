@@ -1,14 +1,27 @@
-import { Directive, ElementRef, HostListener, HostBinding } from '@angular/core';
+import { DragService } from './services/drag.service';
+import { Directive, ElementRef, HostListener, HostBinding, Input, Output } from '@angular/core';
 
+import {DropOptions} from './drop-options';
 @Directive({
   selector: '[appDrop]'
 })
 export class DropDirective {
 
+  private options: DropOptions = {};
+
+  @Input() set appDrop(options:DropOptions){
+    if (options){
+      this.options = options;
+    }
+  }
+
   @HostListener('dragover', ['$event']) dragOver(event:any){
     console.log('dragOver');
     console.log(event);
-    //ev.currentTarget.style.background = 'lightblue';
+    // ev.currentTarget.style.background = 'lightblue';
+    if (this.options.zone && this.dragService.accepts(this.options.zone)){
+
+    }
     event.preventDefault();
   }
 
@@ -17,17 +30,15 @@ export class DropDirective {
     console.log(event);
   }
 
-  @HostListener('drop', ['$event']) drop(event:any){
-    console.log('drop');
-    console.log(event);
-    event.preventDefault();
+  @HostListener('drop', ['$event']) drop(event: any) {
+    console.log('drop', event);
     const id = event.dataTransfer.getData('text');
-    event.target.appendChild()
+    console.log('id: ', id);
   }
 
   @HostListener('dragexit', ['$event']) dragexit() {
 
   }
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private dragService: DragService) { }
 
 }

@@ -18,15 +18,6 @@ import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 export class DroppableListComponent implements OnInit {
   @HostBinding('class.col-md-6') colmd6 = true;
 
-  @HostListener('drop') drop(ev:any){
-    ev.preventDefault();
-    console.log('drop');
-  }
-  @HostListener('ondragover') dragOver(ev:any){
-    ev.preventDefault();
-    ev.dataTransfer.dropEffect = 'move';
-    console.log('dragOver');
-  }
   public dropList: number[];
   constructor() { }
 
