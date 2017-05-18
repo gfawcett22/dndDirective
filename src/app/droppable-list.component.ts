@@ -1,3 +1,4 @@
+import { DragService } from './services/drag.service';
 import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
 import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
 
@@ -9,19 +10,25 @@ import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
   styles: [
     `
     :host{
-      border: 1px solid darkgrey;
       min-height:150px;
     }
     `
   ]
 })
 export class DroppableListComponent implements OnInit {
-  @HostBinding('class.col-md-6') colmd6 = true;
+  @HostBinding('class') classes = 'col-md-6 panel panel-default';
 
-  public dropList: number[];
-  constructor() { }
+  public dropList: number[] = [];
+  constructor(private dragService: DragService) { }
 
   ngOnInit() {
+    this.dragService.drop.subscribe(val => {
+      this.pushDroppedValue(val);
+    });
+  }
+
+  pushDroppedValue(val: number) {
+    this.dropList.push(val);
   }
 
 }

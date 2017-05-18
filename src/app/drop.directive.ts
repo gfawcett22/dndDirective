@@ -16,8 +16,8 @@ export class DropDirective {
   }
 
   @HostListener('dragover', ['$event']) dragOver(event:any){
-    console.log('dragOver');
-    console.log(event);
+    // console.log('dragOver');
+    // console.log(event);
     // ev.currentTarget.style.background = 'lightblue';
     if (this.options.zone && this.dragService.accepts(this.options.zone)){
 
@@ -26,14 +26,15 @@ export class DropDirective {
   }
 
   @HostListener('dragenter', ['$event']) dragenter(event:any) {
-    console.log('dragenter');
-    console.log(event);
+    // console.log('dragenter');
+    // console.log(event);
   }
 
   @HostListener('drop', ['$event']) drop(event: any) {
-    console.log('drop', event);
-    const id = event.dataTransfer.getData('text');
-    console.log('id: ', id);
+    const id = event.dataTransfer.getData('dragData');
+    // console.log(id);
+    console.log(event);
+    this.dragService.drop.next(id);
   }
 
   @HostListener('dragexit', ['$event']) dragexit() {

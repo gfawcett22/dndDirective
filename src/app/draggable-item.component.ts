@@ -5,7 +5,15 @@ import { Component, OnInit, Input } from '@angular/core';
   template: `
     <div appDrag>{{id}}</div>
   `,
-  styles: []
+  styles: [
+    `
+    :host{
+      border: 1px solid lightgrey;
+      display: block;
+      font-size: 1.2rem;
+    }
+    `
+  ]
 })
 export class DraggableItemComponent implements OnInit {
   @Input() id: number;

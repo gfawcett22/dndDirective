@@ -18,23 +18,20 @@ export class DragDirective {
   }
 
   @HostListener('drag', ['$event']) drag(event: any) {
-    console.log('drag');
-    console.log(event);
   }
 
   @HostListener('dragstart', ['$event']) dragstart(event: any) {
-    console.log('dragStart');
-    console.log(event);
+    // console.log('dragStart');
+    // console.log(event);
     if (this.options.dragData) {
-      console.log(this.options.dragData);
-      event.dataTransfer.setData('text', JSON.stringify(this.options.dragData));
+      // console.log(this.options.dragData);
+      event.dataTransfer.setData('dragData', JSON.stringify(this.options.dragData));
     }
-    event.effectAllowed = 'move';
   }
 
   @HostListener('dragend', ['$event']) dragend(event:any) {
-    console.log('dragend');
-    console.log(event);
+    // console.log('dragend');
+    // console.log(event);
   }
 
 
